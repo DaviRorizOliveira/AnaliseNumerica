@@ -1,0 +1,17 @@
+8*x-4*y-2*z=10
+-4*x+6*y-2*z=0
+-2*x-2*y+10*z=4
+
+-4*x+y+p*z+w+p*p5+p*p6+p*p7+p*p8+p*p9=0
+x-4*y+z+p*w+p5+p*p6+p*p7+p*p8+p*p9=0
+p*x+y+4*z+p*w+p*p5+p6+p*p7+p*p8+p*p9=0
+x+p*y+p*z-4*w+p5+p*p6+p7+p*p8+p*p9=0
+p*x+y+p*z+w-4*p5+p6+p*p7+p8+p*p9=0
+p*x+p*y+z+p*w+p5-4*p6+p*p7+p*p8+p9=0
+p*x+p*y+p*z+w+p*p5+p*p6-4*p7+p8+p*p9=-1
+p*x+p*y+p*z+p*w+p5+p*p6+p7-4*p8+p*p9=-1
+p*x+p*y+p*z+p*w+p*p5+p6+p*p7+p8-4*p9=-1
+
+14*x+4*y+4*z=100
+4*x+7*y+9*z=100
+4*x+7*y+18*z=100
