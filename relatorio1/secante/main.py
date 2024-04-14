@@ -1,5 +1,4 @@
 import os
-import math
 
 def secante(f, x0, x1, tol):
 

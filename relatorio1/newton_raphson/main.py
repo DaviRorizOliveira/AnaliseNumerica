@@ -1,5 +1,4 @@
 import os
-import math
 
 def newton_raphson(f, x0, tol):
     # Faz o calculo da derivada da funcao
