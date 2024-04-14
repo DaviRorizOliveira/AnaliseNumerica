@@ -2,9 +2,7 @@ import os
 import numpy as np
 
 def resolve_matriz_inversa(A, B):
-    # Calcular a matriz inversa de A
     A_inv = np.linalg.inv(A)
-    # Multiplicar a matriz inversa de A pelo vetor B
     X = np.dot(A_inv, B)
     return X
 
