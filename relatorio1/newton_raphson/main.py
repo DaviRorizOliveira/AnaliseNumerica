@@ -20,16 +20,16 @@ def newton_raphson(f, x0, tol):
 
 def main():
     # Obtém o diretório atual do arquivo, e cria os caminhos para os arquivos de entrada e saída
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-    input_file_path = os.path.join(dir_path, 'in.txt')
-    output_file_path = os.path.join(dir_path, 'out.txt')
+    diretorio = os.path.dirname(os.path.realpath(__file__))
+    inputs = os.path.join(diretorio, 'in.txt')
+    outputs = os.path.join(diretorio, 'out.txt')
 
     # Lê as entradas do arquivo de entrada
-    with open(input_file_path, 'r') as file:
+    with open(inputs, 'r') as file:
         lines = file.readlines()
 
-    # Calcula e escreve os resultados para cada grupo de função e intervalo
-    with open(output_file_path, 'w') as file:
+    # Calcula e escreve os resultados para cada grupo de funcao e intervalo
+    with open(outputs, 'w') as file:
         for i in range(0, len(lines), 3):
             x0, tolerancia = map(float, lines[i+1:i+3])
             func_str = lines[i].strip()
