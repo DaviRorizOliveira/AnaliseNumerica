@@ -3,7 +3,7 @@ from sympy import *
 
 # Função para calcular a quadratura gaussiana
 def gauss(func, intervalo):
-    pontos = [-sqrt(3)/3, sqrt(3)/3]
+    pontos = [-sqrt(3) / 3, sqrt(3) / 3]
     pesos = [1, 1]
 
     a, b = intervalo
@@ -11,7 +11,6 @@ def gauss(func, intervalo):
     a1 = (b + a) / 2
 
     soma = 0
-    x = Symbol('x')  # Definindo o símbolo x
     for i in range(len(pontos)):
         point = pontos[i]
         soma += pesos[i] * func.subs(x, a0 * point + a1)
@@ -32,7 +31,7 @@ def main():
         for linha in arq:
             # Divide a linha de leitura em 3 intervalos
             aux = linha.strip().split(";")
-            func = sympify(aux[0])  # Convertendo a string da função para uma expressão SymPy
+            func = sympify(aux[0])
             a = float(aux[1])
             b = float(aux[2])
 
@@ -43,11 +42,14 @@ def main():
         for func, intervalo in entradas:
             # Função pronta para calcular a integral a fim de mostrar as diferenças
             integral = integrate(func, (x, intervalo[0], intervalo[1]))
-            resultado = gauss(func, intervalo).evalf()  # Avaliando o resultado como um número de ponto flutuante
-            erro = round(((integral - resultado) / integral) * 100, 2)
-            
             arq.write(f'Integral correta: {integral}\n')
+
+            # Calcula o resultado final
+            resultado = gauss(func, intervalo).evalf()
             arq.write(f'Estimativa da quadratura gaussiana: {resultado}\n')
+            
+            # Porcentagem de erro em relação a integral correta
+            erro = round(((integral - resultado) / integral) * 100, 2)
             arq.write(f'Erro: {erro}%\n')
 
 if __name__ == "__main__":

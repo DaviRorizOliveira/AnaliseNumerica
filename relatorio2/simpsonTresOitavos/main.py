@@ -41,11 +41,14 @@ def main():
         for func, intervalo, n in entradas:
             # Função pronta para calcular a integral a fim de mostrar as diferenças
             integral = integrate(func, (x, intervalo[0], intervalo[1]))
-            resultado = simpson(func, intervalo, n)
-            erro = round(((integral - resultado) / integral) * 100, 2)
-            
             arq.write(f'Integral correta: {integral}\n')
+            
+            # Calcula o resultado final
+            resultado = simpson(func, intervalo, n)
             arq.write(f'Estimativa de Simpson 3/8: {resultado}\n')
+            
+            # Porcentagem de erro em relação a integral correta
+            erro = round(((integral - resultado) / integral) * 100, 2)
             arq.write(f'Erro: {erro}%\n')
 
 if __name__ == "__main__":

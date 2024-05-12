@@ -57,6 +57,7 @@ def main():
             resultado = richards(result1, h1, result2, h3)
             arq.write(f'Estimativa da extrapolacao de richards: {resultado}\n')
             
+            # Porcentagem de erro em relação a integral correta
             erro = round(((integral - resultado) / integral) * 100, 2)
             arq.write(f'Erro: {erro}%\n')
 
