@@ -1,0 +1,6 @@
+Integral correta: 1.64053333333333
+Estimativa do trapezio multiplo: 1.636440129536003
+Integral correta: 1.64053333333333
+Estimativa do trapezio multiplo: 1.6401333599999997
+Integral correta: 1.64053333333333
+Estimativa do trapezio multiplo: 1.6404195577131204

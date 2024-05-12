@@ -1,0 +1,2 @@
+Integral correta: 1.64053333333333
+Estimativa de Simpson 3/8: 1.5191703703703778

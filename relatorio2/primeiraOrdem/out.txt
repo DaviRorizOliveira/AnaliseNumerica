@@ -1,0 +1,31 @@
+Derivada centrada: 210.0
+Derivada progressiva: 100.0
+Derivada retardada: 320.0
+
+Derivada centrada: -29.1
+Derivada progressiva: -36.0
+Derivada retardada: -22.2
+
+Derivada centrada: 0.10000000000000009
+Derivada progressiva: 0.10000000000000009
+Derivada retardada: 0.10000000000000009
+
+Derivada centrada: 25.49
+Derivada progressiva: 21.139999999999997
+Derivada retardada: 29.839999999999996
+
+Derivada centrada: 13.239999999999998
+Derivada progressiva: 9.939999999999998
+Derivada retardada: 16.54
+
+Derivada centrada: 0.2
+Derivada progressiva: -0.2
+Derivada retardada: 0.6
+
+Derivada centrada: 0.0051600000000000005
+Derivada progressiva: 0.00484
+Derivada retardada: 0.0054800000000000005
+
+Derivada centrada: 0.06
+Derivada progressiva: 0.095
+Derivada retardada: 0.025
