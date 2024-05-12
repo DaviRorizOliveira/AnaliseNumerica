@@ -7,19 +7,20 @@ def fx(func, valorX):
     valorY = ('(' + str(valorX) + ')').join(aux)
     return eval(str(valorY))
 
-# Função com a fórmula da regra de Simpson de 1/3
-def simpson(func, intervalo, n):
+# Função com a fórmula do trapézio (Modificada para retornar a altura)
+def trapezio(func, intervalo, n):
     a, b = intervalo
     h = (b - a) / n
-    result = fx(func, a) + fx(func, b)
+    result = 0.5 * (fx(func, a) + fx(func, b))
 
-    for i in range(1, n, 2):
-        result += 4 * fx(func, a + i * h)
+    for i in range(1, n):
+        result += fx(func, a + i * h)
 
-    for i in range(2, n - 1, 2):
-        result += 2 * fx(func, a + i * h)
+    return h * result, h
 
-    return h * result / 3
+# Função com a fórmula da extrapolação de Richards, que tem como parâmetros os valores de dois trapézios e suas respectivas alturas
+def richards(trap1, h1, trap2, h2):
+    return trap2 + (1 / ((h1 / h2) * (h1 / h2) - 1)) * (trap2 - trap1)
 
 def main():
     # Obtém o diretório atual do arquivo e cria os caminhos para os arquivos de entrada e saída
@@ -49,11 +50,22 @@ def main():
         for func, intervalo, n in entradas:
             # Função pronta para calcular a integral a fim de mostrar as diferenças
             integral = integrate(func, (x, a, b))
-            resultado = simpson(func, intervalo, n)
-            erro = round(((integral - resultado) / integral) * 100, 2)
-            
             arq.write(f'Integral correta: {integral}\n')
-            arq.write(f'Estimativa de Simpson 1/3: {resultado}\n')
+            
+            # Calcula um total de 3 trapézios para atingir um valor mais exato
+            trap1, h1 = trapezio(func, intervalo, n)
+            trap2, h2 = trapezio(func, intervalo, n * 2)
+            trap3, h3 = trapezio(func, intervalo, n * 4)
+            
+            # Calcula a extrapolação de Richards entre o trap1 com o trap2, e o trap2 com o trap3
+            result1 = richards(trap1, h1, trap2, h2)
+            result2 = richards(trap2, h2, trap3, h3)
+            
+            # Calcula o resultado final
+            resultado = richards(result1, h1, result2, h3)
+            arq.write(f'Estimativa da extrapolacao de richards: {resultado}\n')
+            
+            erro = round(((integral - resultado) / integral) * 100, 2)
             arq.write(f'Erro: {erro}%\n')
 
 if __name__ == "__main__":

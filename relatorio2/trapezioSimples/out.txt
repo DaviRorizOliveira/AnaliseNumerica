@@ -1,2 +1,3 @@
 Integral correta: 1.64053333333333
 Estimativa do trapezio simples: 0.1728000000000225
+Erro: 89.47%

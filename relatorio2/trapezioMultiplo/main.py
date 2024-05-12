@@ -47,11 +47,11 @@ def main():
             # Função pronta para calcular a integral a fim de mostrar as diferenças
             integral = integrate(func, (x, a, b))
             resultado = trapezio(func, intervalo, n)
+            erro = round(((integral - resultado) / integral) * 100, 2)
             
             arq.write(f'Integral correta: {integral}\n')
             arq.write(f'Estimativa do trapezio multiplo: {resultado}\n')
-            if len(func) < len(entradas) - 1:
-                arq.write("\n")
+            arq.write(f'Erro: {erro}%\n')
 
 if __name__ == "__main__":
     main()

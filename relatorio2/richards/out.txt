@@ -1,0 +1,6 @@
+Integral correta: 6868.72244627506
+Estimativa da extrapolacao de richards: 1.6405333333333387
+Erro: 99.98%
+Integral correta: 0.32814681829833*sqrt(2)
+Estimativa da extrapolacao de richards: 0.822542138588777/pi**0.5
+Erro: 0.0%
