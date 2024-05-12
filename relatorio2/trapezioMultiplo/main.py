@@ -1,20 +1,14 @@
 import os
 from sympy import *
 
-# Função que calcula os valores da função nos pontos 'a' e 'b'
-def fx(func, valorX):
-    aux = func.split('x')
-    valorY = ('(' + str(valorX) + ')').join(aux)
-    return eval(str(valorY))
-
 # Função com a fórmula do trapézio
 def trapezio(func, intervalo, n):
     a, b = intervalo
     h = (b - a) / n
-    result = 0.5 * (fx(func, a) + fx(func, b))
+    result = 0.5 * (func.subs(x, a) + func.subs(x, b))
 
     for i in range(1, n):
-        result += fx(func, a + i * h)
+        result += func.subs(x, a + i * h)
 
     return h * result
 
@@ -24,8 +18,6 @@ def main():
     inputs = os.path.join(diretorio, "in.txt")
     outputs = os.path.join(diretorio, "out.txt")
 
-    x = Symbol("x")
-
     # Lista para armazenar as funções e intervalos
     entradas = []
 
@@ -34,7 +26,7 @@ def main():
         for linha in arq:
             # Divide a linha de leitura em 3 intervalos
             aux = linha.strip().split(";")
-            func = aux[0]
+            func = sympify(aux[0])
             a = float(aux[1])
             b = float(aux[2])
             n = int(aux[3])
@@ -45,7 +37,7 @@ def main():
     with open(outputs, "w") as arq:
         for func, intervalo, n in entradas:
             # Função pronta para calcular a integral a fim de mostrar as diferenças
-            integral = integrate(func, (x, a, b))
+            integral = integrate(func, (x, intervalo[0], intervalo[1]))
             resultado = trapezio(func, intervalo, n)
             erro = round(((integral - resultado) / integral) * 100, 2)
             
@@ -54,4 +46,5 @@ def main():
             arq.write(f'Erro: {erro}%\n')
 
 if __name__ == "__main__":
+    x = symbols('x')
     main()

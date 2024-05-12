@@ -1,3 +1,12 @@
-Integral correta: 1.64053333333333
-Estimativa de Simpson 3/8: 1.5191703703703778
-Erro: 7.40%
+Integral correta: 0.305067581870428
+Estimativa de Simpson 3/8: 0.305042292581279
+Erro: 0.01%
+Integral correta: 0.321485368419253
+Estimativa de Simpson 3/8: 0.321485354430579
+Erro: 0.0%
+Integral correta: 0.717356090899523
+Estimativa de Simpson 3/8: 0.786144018913135
+Erro: -9.59%
+Integral correta: 0.391557276777962
+Estimativa de Simpson 3/8: 0.291698866320963
+Erro: 25.50%

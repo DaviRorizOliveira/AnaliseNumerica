@@ -1,16 +1,22 @@
 import os
 from sympy import *
 
-# Função que calcula os valores da função nos pontos 'a' e 'b'
-def fx(func, valorX):
-    aux = func.split('x')
-    valorY = ('(' + str(valorX) + ')').join(aux)
-    return eval(str(valorY))
+# Função para calcular a quadratura gaussiana
+def gauss(func, intervalo):
+    pontos = [-sqrt(3)/3, sqrt(3)/3]
+    pesos = [1, 1]
 
-# Função com a fórmula do trapézio
-def trapezio(func, intervalo):
-    h = intervalo[1] - intervalo[0]
-    return (h / 2) * (func.subs(x, intervalo[0]) + func.subs(x, intervalo[1]))
+    a, b = intervalo
+    a0 = (b - a) / 2
+    a1 = (b + a) / 2
+
+    soma = 0
+    x = Symbol('x')  # Definindo o símbolo x
+    for i in range(len(pontos)):
+        point = pontos[i]
+        soma += pesos[i] * func.subs(x, a0 * point + a1)
+
+    return a0 * soma
 
 def main():
     # Obtém o diretório atual do arquivo e cria os caminhos para os arquivos de entrada e saída
@@ -26,7 +32,7 @@ def main():
         for linha in arq:
             # Divide a linha de leitura em 3 intervalos
             aux = linha.strip().split(";")
-            func = sympify(aux[0])
+            func = sympify(aux[0])  # Convertendo a string da função para uma expressão SymPy
             a = float(aux[1])
             b = float(aux[2])
 
@@ -37,13 +43,13 @@ def main():
         for func, intervalo in entradas:
             # Função pronta para calcular a integral a fim de mostrar as diferenças
             integral = integrate(func, (x, intervalo[0], intervalo[1]))
-            resultado = trapezio(func, intervalo)
+            resultado = gauss(func, intervalo).evalf()  # Avaliando o resultado como um número de ponto flutuante
             erro = round(((integral - resultado) / integral) * 100, 2)
             
             arq.write(f'Integral correta: {integral}\n')
-            arq.write(f'Estimativa do trapezio simples: {resultado}\n')
+            arq.write(f'Estimativa da quadratura gaussiana: {resultado}\n')
             arq.write(f'Erro: {erro}%\n')
 
 if __name__ == "__main__":
-    x = symbols('x')
+    x = Symbol("x")
     main()

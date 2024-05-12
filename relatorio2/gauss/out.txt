@@ -1,0 +1,12 @@
+Integral correta: 0.305067581870428
+Estimativa da quadratura gaussiana: 0.305751491260426
+Erro: -0.22%
+Integral correta: 0.321485368419253
+Estimativa da quadratura gaussiana: 0.321485695226566
+Erro: 0.0%
+Integral correta: 0.717356090899523
+Estimativa da quadratura gaussiana: 0.717286669118528
+Erro: 0.01%
+Integral correta: 0.391557276777962
+Estimativa da quadratura gaussiana: 0.391554944602397
+Erro: 0.0%

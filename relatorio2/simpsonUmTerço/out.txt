@@ -1,3 +1,12 @@
-Integral correta: 1.64053333333333
-Estimativa de Simpson 1/3: 1.3674666666666744
-Erro: 16.64%
+Integral correta: 0.305067581870428
+Estimativa de Simpson 1/3: 0.305056537540836
+Erro: 0.0%
+Integral correta: 0.321485368419253
+Estimativa de Simpson 1/3: 0.321485362179150
+Erro: 0.0%
+Integral correta: 0.717356090899523
+Estimativa de Simpson 1/3: 0.717356489905625
+Erro: 0.0%
+Integral correta: 0.391557276777962
+Estimativa de Simpson 1/3: 0.391557494569022
+Erro: 0.0%

@@ -1,9 +1,12 @@
-Integral correta: 1.64053333333333
-Estimativa do trapezio multiplo: 1.0688000000000115
-Erro: 34.85%
-Integral correta: 1.64053333333333
-Estimativa do trapezio multiplo: 1.3695736625514496
-Erro: 16.52%
-Integral correta: 1.64053333333333
-Estimativa do trapezio multiplo: 1.484800000000007
-Erro: 9.49%
+Integral correta: 0.305067581870428
+Estimativa do trapezio multiplo: 0.301165021091142
+Erro: 1.28%
+Integral correta: 0.321485368419253
+Estimativa do trapezio multiplo: 0.321472563527613
+Erro: 0.0%
+Integral correta: 0.717356090899523
+Estimativa do trapezio multiplo: 0.716758194500588
+Erro: 0.08%
+Integral correta: 0.391557276777962
+Estimativa do trapezio multiplo: 0.391230924651407
+Erro: 0.08%

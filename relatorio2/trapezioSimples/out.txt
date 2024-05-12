@@ -1,3 +1,12 @@
-Integral correta: 1.64053333333333
-Estimativa do trapezio simples: 0.1728000000000225
-Erro: 89.47%
+Integral correta: 0.305067581870428
+Estimativa do trapezio simples: 0.168434866781561
+Erro: 44.79%
+Integral correta: 0.321485368419253
+Estimativa do trapezio simples: 0.321026313764871
+Erro: 0.14%
+Integral correta: 0.717356090899523
+Estimativa do trapezio simples: 0.678682683738866
+Erro: 5.39%
+Integral correta: 0.391557276777962
+Estimativa do trapezio simples: 0.386322537801746
+Erro: 1.34%
