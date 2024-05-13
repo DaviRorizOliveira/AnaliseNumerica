@@ -23,15 +23,21 @@ def main():
 
     # Lê as entradas do arquivo de entrada
     with open(inputs, "r") as arq:
-        for linha in arq:
-            # Divide a linha de leitura em 3 intervalos
-            aux = linha.strip().split(";")
-            func = sympify(aux[0])
-            a = float(aux[1])
-            b = float(aux[2])
-            n = int(aux[3])
+        lines = arq.readlines()
+        i = 0
+        while i < len(lines):
+            # Lê a função
+            func = sympify(lines[i].strip())
+            
+            # Lê os limites do intervalo
+            a = float(lines[i + 1].strip())
+            b = float(lines[i + 2].strip())
+            
+            # Lê o número de subdivisões
+            n = int(lines[i + 3].strip())
 
             entradas.append((func, (a, b), n))
+            i += 4
 
     # Calcula a integral para cada entrada e escreve os resultados no arquivo de saída
     with open(outputs, "w") as arq:

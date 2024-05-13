@@ -1,6 +1,5 @@
 import os
 from sympy import *
-import math
 
 def derivadaCentrada(pontosX, pontosY, index):
     return (pontosY[index + 1] - pontosY[index - 1]) / (2 * (pontosX[index] - pontosX[index - 1]))
@@ -12,7 +11,7 @@ def derivadaRetardada(pontosX, pontosY, index):
     return (pontosY[index] - pontosY[index - 1]) / (pontosX[index] - pontosX[index - 1])
 
 def main():
-    # Obtém o diretório atual do arquivo, e cria os caminhos para os arquivos de entrada e saída
+    # Obtém o diretório atual do arquivo e cria os caminhos para os arquivos de entrada e saída
     diretorio = os.path.dirname(os.path.realpath(__file__))
     inputs = os.path.join(diretorio, "in.txt")
     outputs = os.path.join(diretorio, "out.txt")
@@ -22,20 +21,24 @@ def main():
 
     # Lê os valores do arquivo de entrada
     with open(inputs, "r") as arq:
-        for linha in arq:
-            aux = linha.strip().split(";")
-            x_aux = aux[0].split(",")
-            y_aux = aux[1].split(",")
+        lines = arq.readlines()
+        i = 0
+        while i < len(lines):
+            # Lê os pontos X e Y da entrada
+            x_aux = list(map(float, lines[i].strip().split()))
+            y_aux = list(map(float, lines[i + 1].strip().split()))
+            index = int(lines[i + 2].strip())
 
-            pontosX.append(list(map(float, x_aux)))
-            pontosY.append(list(map(float, y_aux)))
+            pontosX.append(x_aux)
+            pontosY.append(y_aux)
+            i += 3
 
     # Realiza o cálculo da função e escreve os resultados no arquivo de saída
     with open(outputs, "w") as arq:
         for i in range(len(pontosX)):
-            centrada = derivadaCentrada(pontosX[i], pontosY[i], 1)
-            progressiva = derivadaProgressiva(pontosX[i], pontosY[i], 1)
-            retardada = derivadaRetardada(pontosX[i], pontosY[i], 1)
+            centrada = derivadaCentrada(pontosX[i], pontosY[i], index)
+            progressiva = derivadaProgressiva(pontosX[i], pontosY[i], index)
+            retardada = derivadaRetardada(pontosX[i], pontosY[i], index)
             
             arq.write(f'Derivada centrada: {centrada}\n')
             arq.write(f'Derivada progressiva: {progressiva}\n')
