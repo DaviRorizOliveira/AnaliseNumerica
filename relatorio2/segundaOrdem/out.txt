@@ -1,27 +1,19 @@
-Derivada centrada: -44.0
-Derivada progressiva: 316.0
-Derivada retardada: 92.0
+Derivada centrada: -0.23999999999997315
+Derivada progressiva: -0.23999999999997315
+Derivada retardada: -0.16000000000007233
+Derivada real: 1210.70733332805
 
-Derivada centrada: -2.76
-Derivada progressiva: -15.36
-Derivada retardada: 8.88
+Derivada centrada: -0.9999999999999896
+Derivada progressiva: -1.0000000000000007
+Derivada retardada: -0.8999999999999901
+Derivada real: 93741.8308333415
 
-Derivada centrada: 0.0
-Derivada progressiva: 38.99999999999999
-Derivada retardada: 1.0000000000000013
+Derivada centrada: -0.9850000000000162
+Derivada progressiva: -0.9629999999999941
+Derivada retardada: -0.9959999999999951
+Derivada real: -0.886916666665727
 
-Derivada centrada: -1.74
-Derivada progressiva: 30.644000000000002
-Derivada retardada: 4.71875
-
-Derivada centrada: -1.32
-Derivada progressiva: 17.4
-Derivada retardada: 5.024999999999999
-
-Derivada centrada: -1.280000000000001e-06
-Derivada progressiva: 9.408e-05
-Derivada retardada: 2.719999999999999e-06
-
-Derivada centrada: 0.13999999999999999
-Derivada progressiva: 38.3
-Derivada retardada: 0.35000000000000003
+Derivada centrada: 1.500000000000001
+Derivada progressiva: 1.2500000000000009
+Derivada retardada: 1.7500000000000024
+Derivada real: 3.49999999999965
