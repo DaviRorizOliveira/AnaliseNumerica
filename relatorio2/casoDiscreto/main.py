@@ -12,7 +12,7 @@ def grafico(pontosX, pontosY, func):
     plt.scatter(pontosX, pontosY, color = 'red', label = 'Pontos de dados')
     plt.xlabel('x')
     plt.ylabel('f(x)')
-    plt.title('Interpolação de Lagrange')
+    plt.title('Caso discreto')
     plt.grid(True)
 
     # Configurando os limites do eixo Y
@@ -20,29 +20,23 @@ def grafico(pontosX, pontosY, func):
 
     plt.show()
 
-def lagrange(pontosX, pontosY):
-	n = len(pontosX)
+# Funcao que calcula o caso discreto
+def discreto(pontosX, pontosY, grau):
+    n = len(pontosX)
 
-    # Polinomio interpolador Pn(x)
-	Pn = 0
+    # Construindo a matriz de coeficientes
+    A = np.zeros((n, grau + 1))
+    for i in range(n):
+        for j in range(grau + 1):
+            A[i][j] = pontosX[i] ** j
 
-    # Faz o somatorio de: lk(x) * fk
-	for i in range(n):
-		Pn += interpolador(i, pontosX, n) * pontosY[i]
+    # Resolvendo o sistema de equacoes normais
+    coeficientes = np.linalg.lstsq(A, pontosY, rcond=None)[0]
 
-	Pn = Pn.args[0]
-	return f"f(x) = {Pn}"
+    x = Symbol("x")
+    polinomio = sum(coeficientes[i] * x ** i for i in range(grau + 1))
 
-def interpolador(k, pontosX, n):
-    # Define o simbolo da variável X para montar a formula de f(x)
-	x = Symbol("x")
-
-    # Faz o calculo de lk(x)
-	lk = 1
-	for i in range(n):
-		if (i != k):
-			lk *= Poly((x - pontosX[i]) / (pontosX[k] - pontosX[i]))
-	return lk
+    return f"f(x) = {polinomio}"
 
 def main():
     # Obtem o diretorio atual do arquivo, e cria os caminhos para os arquivos de entrada e saida
@@ -52,6 +46,7 @@ def main():
 
     pontosX = []
     pontosY = []
+    grau = []
     polinomios = []
 
     # Le os valores do arquivo de entrada
@@ -62,15 +57,17 @@ def main():
             # Le os pontos X e Y da entrada
             x_aux = list(map(float, lines[i].strip().split()))
             y_aux = list(map(float, lines[i + 1].strip().split()))
+            grau_aux = int(lines[i + 2].strip())
 
             pontosX.append(x_aux)
             pontosY.append(y_aux)
-            i += 2
+            grau.append(grau_aux)
+            i += 3
     
     # Realiza o calculo da funcao e escreve os resultados no arquivo de saida
     with open(outputs, "w") as arq:
         for i in range(len(pontosX)):
-            resultado = lagrange(pontosX[i], pontosY[i])
+            resultado = discreto(pontosX[i], pontosY[i], grau[i])
             arq.write(str(resultado))
             if i < len(pontosX) - 1:
                 arq.write("\n")

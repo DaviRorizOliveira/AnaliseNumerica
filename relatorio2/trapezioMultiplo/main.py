@@ -1,7 +1,7 @@
 import os
 from sympy import *
 
-# Função com a fórmula do trapézio
+# Funcao com a formula do trapezio
 def trapezio(func, intervalo, n):
     a, b = intervalo
     h = (b - a) / n
@@ -13,15 +13,15 @@ def trapezio(func, intervalo, n):
     return h * result
 
 def main():
-    # Obtém o diretório atual do arquivo e cria os caminhos para os arquivos de entrada e saída
+    # Obtem o diretorio atual do arquivo e cria os caminhos para os arquivos de entrada e saida
     diretorio = os.path.dirname(os.path.realpath(__file__))
     inputs = os.path.join(diretorio, "in.txt")
     outputs = os.path.join(diretorio, "out.txt")
 
-    # Lista para armazenar as funções e intervalos
+    # Lista para armazenar as funcoes e intervalos
     entradas = []
 
-    # Lê as entradas do arquivo de entrada
+    # Le as entradas do arquivo de entrada
     with open(inputs, "r") as arq:
         lines = arq.readlines()
         i = 0
@@ -29,20 +29,20 @@ def main():
             # Lê a função
             func = sympify(lines[i].strip())
             
-            # Lê os limites do intervalo
+            # Le os limites do intervalo
             a = float(lines[i + 1].strip())
             b = float(lines[i + 2].strip())
             
-            # Lê o número de subdivisões
+            # Le o numero de subdivisoes
             n = int(lines[i + 3].strip())
 
             entradas.append((func, (a, b), n))
             i += 4
 
-    # Calcula a integral para cada entrada e escreve os resultados no arquivo de saída
+    # Calcula a integral para cada entrada e escreve os resultados no arquivo de saida
     with open(outputs, "w") as arq:
         for func, intervalo, n in entradas:
-            # Função pronta para calcular a integral a fim de mostrar as diferenças
+            # Funcao pronta para calcular a integral a fim de mostrar as diferencas
             integral = integrate(func, (x, intervalo[0], intervalo[1]))
             resultado = trapezio(func, intervalo, n)
             erro = round(((integral - resultado) / integral) * 100, 2)

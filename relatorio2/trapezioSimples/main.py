@@ -1,27 +1,21 @@
 import os
 from sympy import *
 
-# Função que calcula os valores da função nos pontos 'a' e 'b'
-def fx(func, valorX):
-    aux = func.split('x')
-    valorY = ('(' + str(valorX) + ')').join(aux)
-    return eval(str(valorY))
-
-# Função com a fórmula do trapézio
+# Funcao com a formula do trapezio
 def trapezio(func, intervalo):
     h = intervalo[1] - intervalo[0]
     return (h / 2) * (func.subs(x, intervalo[0]) + func.subs(x, intervalo[1]))
 
 def main():
-    # Obtém o diretório atual do arquivo e cria os caminhos para os arquivos de entrada e saída
+    # Obtem o diretorio atual do arquivo e cria os caminhos para os arquivos de entrada e saida
     diretorio = os.path.dirname(os.path.realpath(__file__))
     inputs = os.path.join(diretorio, "in.txt")
     outputs = os.path.join(diretorio, "out.txt")
 
-    # Lista para armazenar as funções e intervalos
+    # Lista para armazenar as funcoes e intervalos
     entradas = []
 
-    # Lê as entradas do arquivo de entrada
+    # Le as entradas do arquivo de entrada
     with open(inputs, "r") as arq:
         lines = arq.readlines()
         i = 0
@@ -36,10 +30,10 @@ def main():
             entradas.append((func, (a, b)))
             i += 3
 
-    # Calcula a integral para cada entrada e escreve os resultados no arquivo de saída
+    # Calcula a integral para cada entrada e escreve os resultados no arquivo de saida
     with open(outputs, "w") as arq:
         for func, intervalo in entradas:
-            # Função pronta para calcular a integral a fim de mostrar as diferenças
+            # Funcao pronta para calcular a integral a fim de mostrar as diferencas
             integral = integrate(func, (x, intervalo[0], intervalo[1]))
             resultado = trapezio(func, intervalo)
             erro = round(((integral - resultado) / integral) * 100, 2)

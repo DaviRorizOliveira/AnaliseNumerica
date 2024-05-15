@@ -3,7 +3,7 @@ from sympy import *
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Função que plota o grafico com o f(x) e os pontos
+# Funcao que plota o grafico com o f(x) e os pontos
 def grafico(pontosX, pontosY, func):
     x_vals = np.linspace(min(pontosX), max(pontosX), 100)
     y_vals = [func.subs(Symbol("x"), x_val) for x_val in x_vals]
@@ -12,7 +12,7 @@ def grafico(pontosX, pontosY, func):
     plt.scatter(pontosX, pontosY, color = 'red', label = 'Pontos de dados')
     plt.xlabel('x')
     plt.ylabel('f(x)')
-    plt.title('Interpolação de Lagrange')
+    plt.title('Regressão linear')
     plt.grid(True)
 
     # Configurando os limites do eixo Y
@@ -20,21 +20,22 @@ def grafico(pontosX, pontosY, func):
 
     plt.show()
 
+# Funcao que calcula a regressao linear
 def regressaoLinear(pontosX, pontosY):
     n = len(pontosX)
 
-    # Faz o somatório dos valores de X e Y, respectivamente
+    # Faz o somatorio dos valores de X e Y, respectivamente
     x = sum(pontosX)
     y = sum(pontosY)
 
-    # Inicializa as variáveis e faz o somatório dos valores de X*Y e X^2, respectivamente
+    # Inicializa as variaveis e faz o somatorio dos valores de X*Y e X^2, respectivamente
     xy = 0
     x2 = 0
     for i in range (n):
         xy += pontosX[i] * pontosY[i]
         x2 += pontosX[i] * pontosX[i]
 
-    # Faz o calculo dos valores que serão utilizados na fórmula: f(x) = b * x + a
+    # Faz o calculo dos valores que serao utilizados na formula: f(x) = b * x + a
     a = (n * xy - x*y) / (n * x2 - x ** 2)
     b = (y - a * x) / n
     
@@ -49,7 +50,7 @@ def regressaoLinear(pontosX, pontosY):
         return f"f(x) = {a} * x - {b}"
 
 def main():
-    # Obtém o diretório atual do arquivo, e cria os caminhos para os arquivos de entrada e saída
+    # Obtem o diretorio atual do arquivo, e cria os caminhos para os arquivos de entrada e saida
     diretorio = os.path.dirname(os.path.realpath(__file__))
     inputs = os.path.join(diretorio, "in.txt")
     outputs = os.path.join(diretorio, "out.txt")
@@ -58,12 +59,12 @@ def main():
     pontosY = []
     polinomios = []
 
-    # Lê os valores do arquivo de entrada
+    # Le os valores do arquivo de entrada
     with open(inputs, "r") as arq:
         lines = arq.readlines()
         i = 0
         while i < len(lines):
-            # Lê os pontos X e Y da entrada
+            # Le os pontos X e Y da entrada
             x_aux = list(map(float, lines[i].strip().split()))
             y_aux = list(map(float, lines[i + 1].strip().split()))
 
@@ -71,7 +72,7 @@ def main():
             pontosY.append(y_aux)
             i += 2
     
-    # Realiza o cálculo da função e escreve os resultados no arquivo de saída
+    # Realiza o calculo da funcao e escreve os resultados no arquivo de saida
     with open(outputs, "w") as arq:
         for i in range(len(pontosX)):
             resultado = regressaoLinear(pontosX[i], pontosY[i])
@@ -80,7 +81,7 @@ def main():
                 arq.write("\n")
             polinomios.append(resultado)
 
-    # Plotar gráficos
+    # Plotar os graficos
     for i in range(len(pontosX)):
         Pn = sympify(polinomios[i].split('=')[1].strip())
         grafico(pontosX[i], pontosY[i], Pn)
