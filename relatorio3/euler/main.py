@@ -23,6 +23,10 @@ def solucao(func, x0, y0, xFinal):
     y_exact = sol.rhs.subs(x, xFinal)
     return y_exact
 
+# Funcao para calcular o erro percentual
+def calcular_erro(y_numerico, y_exato):
+    return round(((y_numerico - y_exato) / y_exato) * 100, 2)
+
 def main():
     # Obtem o diretorio atual do arquivo e cria os caminhos para os arquivos de entrada e saida
     diretorio = os.path.dirname(os.path.realpath(__file__))
@@ -54,16 +58,20 @@ def main():
         for func, x0, y0, h, n in entradas:
             # Converte a funcao simbolica em uma funcao numerica
             f = lambdify((symbols('x'), symbols('y')), func, 'math')
+
+            xExato = x0 + n * h
+
             resultado = euler(f, x0, y0, h, n)
-            
+            yExato = solucao(func, x0, y0, xExato)
+            erro = round(((resultado[-1][1] - yExato) / resultado[-1][1]) * 100, 2)
+
             # Escreve o resultado no arquivo de saida
+            arq.write(f'Estimativa pelo metodo de Euler para a funcao: "{func}" com x0 = {x0}, y0 = {y0}, h = {h}, n = {n}:\n')
             for x, y in resultado:
                 arq.write(f'x: {x}, y: {y}\n')
-            
-            # Calcular e escrever a solucao exata no arquivo de saida
-            x_final = x0 + n * h
-            y_exact = solucao(func, x0, y0, x_final)
-            arq.write(f'Solucao exata para x={x_final}: y={y_exact}\n')
+            arq.write(f'Solucao exata para x = {xExato}: y = {yExato}\n')
+            arq.write(f'Erro: {erro}%\n')
+            arq.write(f'\n')
 
 if __name__ == "__main__":
     main()
