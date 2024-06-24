@@ -23,10 +23,6 @@ def solucao(func, x0, y0, xFinal):
     y_exact = sol.rhs.subs(x, xFinal)
     return y_exact
 
-# Funcao para calcular o erro percentual
-def calcular_erro(y_numerico, y_exato):
-    return round(((y_numerico - y_exato) / y_exato) * 100, 2)
-
 def main():
     # Obtem o diretorio atual do arquivo e cria os caminhos para os arquivos de entrada e saida
     diretorio = os.path.dirname(os.path.realpath(__file__))
