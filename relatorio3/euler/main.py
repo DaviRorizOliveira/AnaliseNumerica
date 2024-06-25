@@ -1,5 +1,5 @@
 import os
-from sympy import *
+from sympy import symbols, Function, Eq, dsolve, lambdify, sympify
 
 # Funcao para calcular o metodo de Euler
 def euler(f, x0, y0, h, n):
@@ -14,14 +14,12 @@ def euler(f, x0, y0, h, n):
     
     return results
 
-# Funcao para calcular a solucao exata da EDO
-def solucao(func, x0, y0, xFinal):
-    x = symbols('x')
+# Funcao para calcular a solucao exata da EDO utilizando funcoes prontas do sympy
+def solucao(func, x0, y0, x):
     y = Function('y')
     edo = Eq(y(x).diff(x), func.subs(symbols('y'), y(x)))
     sol = dsolve(edo, y(x), ics={y(x0): y0})
-    y_exact = sol.rhs.subs(x, xFinal)
-    return y_exact
+    return sol.rhs
 
 def main():
     # Obtem o diretorio atual do arquivo e cria os caminhos para os arquivos de entrada e saida
@@ -54,20 +52,19 @@ def main():
         for func, x0, y0, h, n in entradas:
             # Converte a funcao simbolica em uma funcao numerica
             f = lambdify((symbols('x'), symbols('y')), func, 'math')
-
-            xExato = x0 + n * h
-
+            
             resultado = euler(f, x0, y0, h, n)
-            yExato = solucao(func, x0, y0, xExato)
-            erro = round(((resultado[-1][1] - yExato) / resultado[-1][1]) * 100, 2)
-
-            # Escreve o resultado no arquivo de saida
-            arq.write(f'Estimativa pelo metodo de Euler para a funcao: "{func}" com x0 = {x0}, y0 = {y0}, h = {h}, n = {n}:\n')
+            solucao_exata = solucao(func, x0, y0, symbols('x'))
+            
+            # arq.write(f'Estimativa pelo metodo de Euler para a funcao: "{func}" com x0 = {x0}, y0 = {y0}, h = {h}, n = {n}:\n')
+            arq.write(f'Estimativa pelo metodo de Euler:\n')
             for x, y in resultado:
+                yExato = solucao_exata.subs(symbols('x'), x)
+                erro = round(((y - yExato) / yExato) * 100, 2)
                 arq.write(f'x: {x}, y: {y}\n')
-            arq.write(f'Solucao exata para x = {xExato}: y = {yExato}\n')
-            arq.write(f'Erro: {erro}%\n')
-            arq.write(f'\n')
+                arq.write(f'y_exato: {yExato}\n')
+                arq.write(f'Erro: {erro}%\n')
+            arq.write('\n')
 
 if __name__ == "__main__":
     main()

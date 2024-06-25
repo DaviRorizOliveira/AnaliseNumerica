@@ -1,6 +1,14 @@
-Estimativa pelo metodo de Euler para a funcao: "-2*x**3 + 12*x**2 - 20*x + 8.5" com x0 = 0.0, y0 = 1.0, h = 0.5, n = 1:
+Estimativa pelo metodo de Euler:
 x: 0.0, y: 1.0
+y_exato: 1.00000000000000
+Erro: 0%
 x: 0.5, y: 5.25
-Solucao exata para x = 0.5: y = 3.21875000000000
-Erro: 38.69%
+y_exato: 3.21875000000000
+Erro: 63.11%
+x: 1.0, y: 5.875
+y_exato: 3.00000000000000
+Erro: 95.83%
+x: 1.5, y: 5.125
+y_exato: 2.21875000000000
+Erro: 130.99%
 
