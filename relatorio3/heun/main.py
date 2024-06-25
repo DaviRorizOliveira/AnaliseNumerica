@@ -1,14 +1,16 @@
 import os
 from sympy import *
 
-# Funcao para calcular o metodo de Euler
-def euler(f, x0, y0, h, n):
+# Funcao para calcular o metodo de Heun
+def heun(f, x0, y0, h, n):
     x = x0
     y = y0
     results = [(x, y)]
 
     for i in range(n):
-        y += h * f(x, y)
+        k1 = h * f(x, y)
+        k2 = h * f(x + h, y + k1)
+        y += (k1 + k2) / 2
         x += h
         results.append((x, y))
     
@@ -53,16 +55,15 @@ def main():
             # Converte a funcao simbolica em uma funcao numerica
             f = lambdify((symbols('x'), symbols('y')), func, 'math')
             
-            resultado = euler(f, x0, y0, h, n)
+            resultado = heun(f, x0, y0, h, n)
             solucao_exata = solucao(func, x0, y0, symbols('x'))
             
-            # arq.write(f'Estimativa pelo metodo de Euler para a funcao: "{func}" com x0 = {x0}, y0 = {y0}, h = {h}, n = {n}:\n')
-            arq.write(f'Estimativa pelo metodo de Euler:\n')
+            arq.write(f'Estimativa pelo metodo de Heun:\n')
             for x, y in resultado:
                 yExato = solucao_exata.subs(symbols('x'), x)
                 erro = round(((y - yExato) / yExato) * 100, 2)
                 
-                arq.write(f'x: {x} // y: {y}\n')
+                arq.write(f'x: {x}, y: {y}\n')
                 arq.write(f'y_exato: {yExato}\n')
                 arq.write(f'Erro: {erro}%\n')
             arq.write('\n')
