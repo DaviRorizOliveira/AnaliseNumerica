@@ -60,7 +60,7 @@ def main():
             resultado = hungeKutta(f, x0, y0, h, n)
             solucao_exata = solucao(func, x0, y0, symbols('x'))
             
-            arq.write(f'Estimativa pelo metodo de Heun:\n')
+            arq.write(f'Estimativa pelo metodo de Hunge-Kutta de 4 ordem:\n')
             for x, y in resultado:
                 yExato = solucao_exata.subs(symbols('x'), x)
                 erro = round(((y - yExato) / yExato) * 100, 2)

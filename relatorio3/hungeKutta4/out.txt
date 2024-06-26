@@ -1,4 +1,4 @@
-Estimativa pelo metodo de Heun:
+Estimativa pelo metodo de Hunge-Kutta de 4 ordem:
 x: 0.0, y: 2.0
 y_exato: 2.00000000000000
 Erro: 0%
@@ -15,7 +15,7 @@ x: 4.0, y: 75.43917199038293
 y_exato: 75.3389626091586
 Erro: 0.13%
 
-Estimativa pelo metodo de Heun:
+Estimativa pelo metodo de Hunge-Kutta de 4 ordem:
 x: 0.0, y: 1.0
 y_exato: 1.00000000000000
 Erro: 0%
