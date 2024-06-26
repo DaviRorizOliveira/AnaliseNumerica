@@ -1,4 +1,21 @@
 Estimativa pelo metodo de Euler:
+x: 0.0 // y: 2.0
+y_exato: 2.00000000000000
+Erro: 0%
+x: 1.0 // y: 5.0
+y_exato: 6.19463137720937
+Erro: -19.28%
+x: 2.0 // y: 11.402163713969871
+y_exato: 14.8439219076465
+Erro: -23.19%
+x: 3.0 // y: 25.513211554565395
+y_exato: 33.6771717679682
+Erro: -24.24%
+x: 4.0 // y: 56.84931129984912
+y_exato: 75.3389626091586
+Erro: -24.54%
+
+Estimativa pelo metodo de Euler:
 x: 0.0 // y: 1.0
 y_exato: 1.00000000000000
 Erro: 0%
