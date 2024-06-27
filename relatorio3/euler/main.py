@@ -1,5 +1,30 @@
 import os
 from sympy import *
+import matplotlib.pyplot as plt
+
+# Funcao que plota o grafico da funcao exata e encontrada pelo metodo
+def grafico(func, x0, y0, h, n):
+    # Converte a funcao simbolica em uma funcao numerica
+    f = lambdify((symbols('x'), symbols('y')), func, 'math')
+    
+    resultado = euler(f, x0, y0, h, n)
+    solucao_exata = solucao(func, x0, y0, symbols('x'))
+    
+    x_vals = [x for x, y in resultado]
+    y_aprox = [y for x, y in resultado]
+    y_exato = [solucao_exata.subs(symbols('x'), x) for x in x_vals]
+    
+    # Plotando os resultados
+    plt.figure(figsize=(10, 6))
+    plt.plot(x_vals, y_aprox, marker='o', linestyle='-', color='b', label='Estimativa pelo método de Euler')
+    plt.plot(x_vals, y_exato, linestyle='--', color='r', label='Solução Exata')
+    plt.title('Comparação entre Método de Euler e Solução Exata')
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.legend()
+    plt.grid(True)
+    plt.tight_layout()
+    plt.show()
 
 # Funcao para calcular o metodo de Euler
 def euler(f, x0, y0, h, n):
@@ -56,7 +81,6 @@ def main():
             resultado = euler(f, x0, y0, h, n)
             solucao_exata = solucao(func, x0, y0, symbols('x'))
             
-            # arq.write(f'Estimativa pelo metodo de Euler para a funcao: "{func}" com x0 = {x0}, y0 = {y0}, h = {h}, n = {n}:\n')
             arq.write(f'Estimativa pelo metodo de Euler:\n')
             for x, y in resultado:
                 yExato = solucao_exata.subs(symbols('x'), x)
@@ -66,6 +90,9 @@ def main():
                 arq.write(f'y_exato: {yExato}\n')
                 arq.write(f'Erro: {erro}%\n')
             arq.write('\n')
+            
+            # Plotar os graficos
+            grafico(func, x0, y0, h, n)
 
 if __name__ == "__main__":
     main()
