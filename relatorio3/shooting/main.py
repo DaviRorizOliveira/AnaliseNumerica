@@ -1,41 +1,69 @@
 import os
-from sympy import symbols, Function, Eq, dsolve, lambdify, sympify
-from scipy.optimize import root
+from sympy import *
 
-# Função para calcular o método de Runge-Kutta de quarta ordem para sistemas de EDOs
-def hungeKutta_system(f, x0, y0, h, n):
+# Funcao para calcular o metodo de Hunge-Kutta de 4 ordem para sistemas de EDOs
+def hungeKuttaSistemasDiferenciais(f1, f2, x0, y0, y1, h, n):
     x = x0
     y = y0
-    results = [(x, y)]
+    z = y1
+    results = [(x, y, z)]
 
     for i in range(n):
-        k1 = [h * fi(*y) for fi in f]
-        k2 = [h * fi(*(y + 0.5 * k1_i for y, k1_i in zip(y, k1))) for fi in f]
-        k3 = [h * fi(*(y + 0.5 * k2_i for y, k2_i in zip(y, k2))) for fi in f]
-        k4 = [h * fi(*(y + k3_i for y, k3_i in zip(y, k3))) for fi in f]
-        y = [y + (k1_i + 2 * k2_i + 2 * k3_i + k4_i) / 6 for y, k1_i, k2_i, k3_i, k4_i in zip(y, k1, k2, k3, k4)]
+        k1_y = h * f1(x, y, z)
+        k1_z = h * f2(x, y, z)
+        
+        k2_y = h * f1(x + h / 2, y + k1_y / 2, z + k1_z / 2)
+        k2_z = h * f2(x + h / 2, y + k1_y / 2, z + k1_z / 2)
+        
+        k3_y = h * f1(x + h / 2, y + k2_y / 2, z + k2_z / 2)
+        k3_z = h * f2(x + h / 2, y + k2_y / 2, z + k2_z / 2)
+        
+        k4_y = h * f1(x + h, y + k3_y, z + k3_z)
+        k4_z = h * f2(x + h, y + k3_y, z + k3_z)
+        
+        y += (k1_y + 2 * k2_y + 2 * k3_y + k4_y) / 6
+        z += (k1_z + 2 * k2_z + 2 * k3_z + k4_z) / 6
         x += h
-        results.append((x, y))
-
+        results.append((x, y, z))
+    
     return results
 
-# Função para calcular a solução exata da EDO utilizando funções prontas do sympy
-def solucao(func, x0, y0, x):
-    y = Function('y')
-    edo = Eq(y(x).diff(x), func.subs(symbols('y'), y(x)))
-    sol = dsolve(edo, y(x), ics={y(x0): y0})
-    return sol.rhs
+# Funcao para calcular a solucao exata da EDO utilizando funcoes prontas do sympy
+def solucao(func1, func2, x0, y0, y1):
+    x = symbols('x')
+    y = Function('y')(x)
+    z = Function('z')(x)
 
-# Função para o método de shooting
-def shooting(f, x0, y0, xf, yf, h):
-    def objective(shooting_param):
-        result = hungeKutta_system(f, x0, [y0, shooting_param], h, int((xf - x0) / h))
-        return result[-1][1][0] - yf
+    edo1 = Eq(y.diff(x), func1.subs({'y': y, 'z': z}))
+    edo2 = Eq(z.diff(x), func2.subs({'y': y, 'z': z}))
 
-    # Encontrar o valor inicial correto para y'
-    shooting_param = root(objective, 0).x[0]
+    sol = dsolve((edo1, edo2), ics={y.subs(x, x0): y0, z.subs(x, x0): y1})
+    sol_y = sol[0].rhs
+    sol_z = sol[1].rhs
+
+    return sol_y, sol_z
+
+# Funcao para resolver o problema pelo metodo de shooting
+def shooting_method(func1, func2, x0, y0, xb, yb, h, n, tol=1e-6, max_iter=100):
+    from scipy.optimize import fsolve
     
-    return hungeKutta_system(f, x0, [y0, shooting_param], h, int((xf - x0) / h))
+    def boundary_value_error(guess):
+        f1 = lambdify((symbols('x'), symbols('y'), symbols('z')), func1, 'math')
+        f2 = lambdify((symbols('x'), symbols('y'), symbols('z')), func2, 'math')
+        
+        result = hungeKuttaSistemasDiferenciais(f1, f2, x0, y0, guess, h, n)
+        x, y, z = result[-1]
+        
+        return y - yb
+    
+    y1_guess = 1.0  # chute inicial para y'(x0)
+    y1_solution = fsolve(boundary_value_error, y1_guess, xtol=tol, maxfev=max_iter)[0]
+    
+    f1 = lambdify((symbols('x'), symbols('y'), symbols('z')), func1, 'math')
+    f2 = lambdify((symbols('x'), symbols('y'), symbols('z')), func2, 'math')
+    
+    result = hungeKuttaSistemasDiferenciais(f1, f2, x0, y0, y1_solution, h, n)
+    return result, y1_solution
 
 def main():
     # Obtem o diretorio atual do arquivo e cria os caminhos para os arquivos de entrada e saida
@@ -58,24 +86,32 @@ def main():
             # Le os valores iniciais e parametros
             x0 = float(lines[i + 2].strip())
             y0 = float(lines[i + 3].strip())
-            xf = float(lines[i + 4].strip())
-            yf = float(lines[i + 5].strip())
+            xb = float(lines[i + 4].strip())
+            yb = float(lines[i + 5].strip())
             h = float(lines[i + 6].strip())
+            n = int(lines[i + 7].strip())
 
-            entradas.append(([func1, func2], x0, y0, xf, yf, h))
-            i += 7
+            entradas.append((func1, func2, x0, y0, xb, yb, h, n))
+            i += 8
 
     # Calcula o metodo para cada entrada e escreve os resultados no arquivo de saida
     with open(outputs, "w") as arq:
-        for funcs, x0, y0, xf, yf, h in entradas:
-            # Converte a função simbólica em uma função numérica
-            f = [lambdify((symbols('T'), symbols('z')), func, 'math') for func in funcs]
+        for func1, func2, x0, y0, xb, yb, h, n in entradas:
+            # Converte as funcoes simbolicas em funcoes numericas
             
-            resultado = shooting(f, x0, y0, xf, yf, h)
+            resultado, y1_shooting = shooting_method(func1, func2, x0, y0, xb, yb, h, n)
+            solucao_exata_y, solucao_exata_z = solucao(func1, func2, x0, y0, y1_shooting)
             
-            arq.write(f'Estimativa pelo método de Shooting:\n')
-            for x, y in resultado:
-                arq.write(f'x: {x}, T: {y[0]}, z: {y[1]}\n')
+            arq.write(f'Estimativa pelo metodo de Shooting:\n')
+            for x, y, z in resultado:
+                yExato = solucao_exata_y.subs(symbols('x'), x).evalf()
+                zExato = solucao_exata_z.subs(symbols('x'), x).evalf()
+                erro_y = round(((y - yExato) / yExato) * 100, 2)
+                erro_z = round(((z - zExato) / zExato) * 100, 2)
+                
+                arq.write(f'x: {x}, y1: {y}, y2: {z}\n')
+                arq.write(f'y1_exato: {yExato}, y2_exato: {zExato}\n')
+                arq.write(f'Erro y1: {erro_y}%, Erro y2: {erro_z}%\n')
             arq.write('\n')
 
 if __name__ == "__main__":
