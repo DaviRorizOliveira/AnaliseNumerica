@@ -1,5 +1,40 @@
 import os
 from sympy import *
+import matplotlib.pyplot as plt
+
+# Funcao que plota o grafico da funcao exata e encontrada pelo metodo
+def grafico(resultado, solucao_exata_y, solucao_exata_z):
+    x_vals = [x for x, y, z in resultado]
+    y_aprox = [y for x, y, z in resultado]
+    z_aprox = [z for x, y, z in resultado]
+    y_exato = [solucao_exata_y.subs(symbols('x'), x).evalf() for x in x_vals]
+    z_exato = [solucao_exata_z.subs(symbols('x'), x).evalf() for x in x_vals]
+
+    # Plotando os resultados
+    plt.figure(figsize=(12, 6))
+
+    # Grafico para y
+    plt.subplot(1, 2, 1)
+    plt.plot(x_vals, y_aprox, marker='o', linestyle='-', color='b', label='Estimativa y pelo método dos SED')
+    plt.plot(x_vals, y_exato, linestyle='--', color='r', label='Solução Exata para y')
+    plt.title('Comparação entre Método dos SED e Solução Exata (y)')
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.legend()
+    plt.grid(True)
+
+    # Grafico para z
+    plt.subplot(1, 2, 2)
+    plt.plot(x_vals, z_aprox, marker='o', linestyle='-', color='b', label='Estimativa z pelo método dos SED')
+    plt.plot(x_vals, z_exato, linestyle='--', color='r', label='Solução Exata para z')
+    plt.title('Comparação entre Método dos SED e Solução Exata (z)')
+    plt.xlabel('x')
+    plt.ylabel('z')
+    plt.legend()
+    plt.grid(True)
+
+    plt.tight_layout()
+    plt.show()
 
 # Funcao para calcular o metodo de Hunge-Kutta de 4 ordem para sistemas de EDOs
 def hungeKuttaSistemasDiferenciais(f1, f2, x0, y0, y1, h, n):
@@ -85,6 +120,7 @@ def main():
             for x, y, z in resultado:
                 yExato = solucao_exata_y.subs(symbols('x'), x).evalf()
                 zExato = solucao_exata_z.subs(symbols('x'), x).evalf()
+                
                 erro_y = round(((y - yExato) / yExato) * 100, 2)
                 erro_z = round(((z - zExato) / zExato) * 100, 2)
                 
@@ -92,6 +128,9 @@ def main():
                 arq.write(f'y1_exato: {yExato}, y2_exato: {zExato}\n')
                 arq.write(f'Erro y1: {erro_y}%, Erro y2: {erro_z}%\n')
             arq.write('\n')
+
+            # Plotar os graficos
+            grafico(resultado, solucao_exata_y, solucao_exata_z)
 
 if __name__ == "__main__":
     main()

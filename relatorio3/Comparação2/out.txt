@@ -1,0 +1,24 @@
+Comparação entre Diferenças Finitas e Shooting:
+x_diff: 0.0, y_diff: 1.0, Erro Diff: 0.0%
+x_shooting: 0.0, y_shooting: 1.0, Erro Shooting: 0.0%
+x_diff: 0.1, y_diff: 1.0, Erro Diff: -1.46%
+x_shooting: 0.1, y_shooting: 1.0148158670028387, Erro Shooting: 0.0%
+x_diff: 0.2, y_diff: 1.03, Erro Diff: -2.57%
+x_shooting: 0.2, y_shooting: 1.057182198104166, Erro Shooting: 0.0%
+x_diff: 0.30000000000000004, y_diff: 1.0870699029126214, Erro Diff: -3.09%
+x_shooting: 0.30000000000000004, y_shooting: 1.1216998897177695, Erro Shooting: 0.0%
+x_diff: 0.4, y_diff: 1.1648462911273196, Erro Diff: -3.05%
+x_shooting: 0.4, y_shooting: 1.2014881036244773, Erro Shooting: 0.0%
+x_diff: 0.5, y_diff: 1.255609618037652, Erro Diff: -2.65%
+x_shooting: 0.5, y_shooting: 1.2898071487561804, Erro Shooting: 0.0%
+x_diff: 0.6000000000000001, y_diff: 1.3521143139350462, Erro Diff: -2.09%
+x_shooting: 0.6, y_shooting: 1.3809325464253681, Erro Shooting: 0.0%
+x_diff: 0.7000000000000001, y_diff: 1.4484872400849704, Erro Diff: -1.49%
+x_shooting: 0.7, y_shooting: 1.470415759334389, Erro Shooting: 0.0%
+x_diff: 0.8, y_diff: 1.5403982534425766, Erro Diff: -0.94%
+x_shooting: 0.7999999999999999, y_shooting: 1.5550310971382222, Erro Shooting: -0.0%
+x_diff: 0.9, y_diff: 1.6249048785133102, Erro Diff: -0.47%
+x_shooting: 0.8999999999999999, y_shooting: 1.6326118664063782, Erro Shooting: -0.0%
+x_diff: 1.0, y_diff: 1.7002148697864552, Erro Diff: -0.1%
+x_shooting: 0.9999999999999999, y_shooting: 1.7018677085421234, Erro Shooting: -0.0%
+

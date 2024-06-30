@@ -6,14 +6,14 @@ import matplotlib.pyplot as plt
 def grafico(func, x0, y0, h, n):
     # Converte a funcao simbolica em uma funcao numerica
     f = lambdify((symbols('x'), symbols('y')), func, 'math')
-    
+
     resultado = euler(f, x0, y0, h, n)
     solucao_exata = solucao(func, x0, y0, symbols('x'))
-    
+
     x_vals = [x for x, y in resultado]
     y_aprox = [y for x, y in resultado]
     y_exato = [solucao_exata.subs(symbols('x'), x) for x in x_vals]
-    
+
     # Plotando os resultados
     plt.figure(figsize=(10, 6))
     plt.plot(x_vals, y_aprox, marker='o', linestyle='-', color='b', label='Estimativa pelo método de Euler')
